@@ -50,6 +50,36 @@ This step trains the model using the preprocessed KITTI dataset. It:
 - Monitoring training metrics in real-time with the `log_handler.py`
 - Running the model training with dynamic parameters
 
+
+## Important Note: Configuring the Environment for Each Step
+
+You may need to specify an environment in the valohai.yaml file to ensure each step runs in the correct environment. For example:
+
+   ```yaml
+   - step:
+       name: prep_kitti_dataset
+       image: valohai/mmdetection3d
+       environment: aws-eu-west-1-g4dn-12xlarge
+   ```
+If you do not set an environment explicitly, the job will use the project’s default environment. Here are some options to configure this:
+
+1. Remove the environment property from `valohai.yaml` to run the step on the project’s default environment. You can adjust this in Valohai under Settings -> General.
+
+2. Set the environment property to point to one of your available environments. To view all available environments with their slugs, run:
+   
+   ```bash
+   vh environments
+   ```
+### Resource Requirements  
+
+The `prep_kitti_dataset` and `train` steps have specific memory and GPU requirements to run smoothly.
+
+- `prep_kitti_dataset`: This step requires a high-memory machine (approximately 90GB of memory) but does not need a GPU. For AWS, we recommend using instances such as `g4dn.8xlarge` or `g4dn.16xlarge` for sufficient memory and efficient data processing.
+
+- `train`: This step requires a GPU machine with at least 16GB of memory for effective training performance. On AWS, the `g4dn.xlarge` instance is suitable for this job, as it provides GPU capabilities along with the necessary memory.
+
+By using the appropriate instance types, you can ensure the steps run efficiently without resource-related interruptions.rge
+
 ## Running MMDetection3D on Valohai
 
 ### Setup
