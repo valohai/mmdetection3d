@@ -103,26 +103,29 @@
       - cp /valohai/inputs/model_weights/* /valohai/repository/checkpoints/
       - mkdir -p /valohai/repository/data/
       - tar -xf /valohai/inputs/kitti_dataset/kitti_processed.tar -C /valohai/repository/data/
-      - python3 tools/test.py /valohai/repository/configs/mvxnet/mvxnet_fpn_dv_second_secfpn_8xb2-80e_kitti-3d-3class.py /valohai/inputs/mvx_faster_rcnn_detectron2-caffe_20e_coco-pretrain_gt-sample_kitti-3-class_moderate-79.3_20200207-a4a6a3c7.pth  --show-dir=/valohai/outputs/ --work-dir=/valohai/outputs/
+      - python3 tools/test.py /valohai/repository/configs/mvxnet/mvxnet_fpn_dv_second_secfpn_8xb2-80e_kitti-3d-3class.py /valohai/inputs/model_weights/mvx_faster_rcnn_detectron2-caffe_20e_coco-pretrain_gt-sample_kitti-3-class_moderate-79.3_20200207-a4a6a3c7.pth  --show-dir=/valohai/outputs/ --work-dir=/valohai/outputs/ --task=mono_det
     inputs:
       - name: model_weights
         default: https://download.openmmlab.com/mmdetection3d/pretrain_models/mvx_faster_rcnn_detectron2-caffe_20e_coco-pretrain_gt-sample_kitti-3-class_moderate-79.3_20200207-a4a6a3c7.pth
       - name: kitti_dataset
         default: dataset://kitti_processed/latest
+      - name: train_data
+        optional: true
 
 
 - pipeline:
-  name: train-pipeline
-  nodes:
-    - name: preprocess-node
-      type: execution
-      step: prep_kitti_dataset
-    - name: train-model-node
-      type: execution
-      step: train
-    - name: test-node
-      type: execution
-      step: test
-  edges:
-    - [ preprocess-node.outputs.*, train-model-node.inputs.data ]
-    - [ train-model-node.outputs.*.pkl, test-node.inputs.model ]
+    name: train-pipeline
+    nodes:
+      - name: preprocess-node
+        type: execution
+        step: prep_kitti_dataset
+      - name: train-model-node
+        type: execution
+        step: train
+      - name: test-node
+        type: execution
+        step: test
+    edges:
+    - [ preprocess-node.output.*, train-model-node.input.kitti_dataset ]
+    - [ preprocess-node.output.*, test-node.input.kitti_dataset ]
+    - [ train-model-node.output.*.json, test-node.input.train_data ]
