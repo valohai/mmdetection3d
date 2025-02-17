@@ -80,4 +80,13 @@ TRAINING_COMMAND = [
 ]
 
 print("Starting training...")
-subprocess.run(TRAINING_COMMAND, check=True, capture_output=True, text=True)
+result = subprocess.run(TRAINING_COMMAND, text=True, capture_output=True)
+
+# Print STDOUT and STDERR to get more details
+print("STDOUT:", result.stdout)
+print("STDERR:", result.stderr)
+
+# Raise an error if the process failed
+if result.returncode != 0:
+    raise RuntimeError(f"Training failed with exit code {result.returncode}")
+
