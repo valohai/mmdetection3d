@@ -84,6 +84,9 @@ with open(CONFIG_PATH, "w") as f:
 
 print("✅ Updated dataset path in config file:", CONFIG_PATH)
 
+print("🔹 Checking dataset in /opt/ml/input/data:")
+print(os.listdir("/opt/ml/input/data/"))
+print(os.listdir("/opt/ml/input/data/kitti"))
 
 # Define training command
 TRAINING_COMMAND = [
