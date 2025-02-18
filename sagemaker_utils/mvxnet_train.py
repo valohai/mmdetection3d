@@ -70,6 +70,21 @@ import os
 print("🔹 Checking files in /opt/ml/code/:")
 print(os.listdir("/opt/ml/code/"))
 
+
+CONFIG_PATH = "/opt/ml/code/configs/mvxnet_fpn_dv_second_secfpn_8xb2-80e_kitti-3d-3class.py"
+
+with open(CONFIG_PATH, "r") as f:
+    config_content = f.read()
+
+# Replace dataset path dynamically
+config_content = config_content.replace("data/kitti/", "/opt/ml/input/data/kitti/")
+
+with open(CONFIG_PATH, "w") as f:
+    f.write(config_content)
+
+print("✅ Updated dataset path in config file:", CONFIG_PATH)
+
+
 # Define training command
 TRAINING_COMMAND = [
     "python3", LOCAL_TRAIN_SCRIPT,
