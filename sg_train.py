@@ -12,10 +12,14 @@ from mmengine.runner import Runner
 from mmdet3d.utils import replace_ceph_backend
 
 import os
+import sys
 import argparse
 import logging
 from mmengine.config import Config
 from mmengine.runner import Runner
+
+print('***************THE CODE')
+print(os.listdir('/opt/ml/code/'))
 
 try:
     import boto3
