@@ -4,13 +4,45 @@ import logging
 import os
 import os.path as osp
 import subprocess
-import boto3
 
 from mmengine.config import Config, DictAction
 from mmengine.logging import print_log
 from mmengine.registry import RUNNERS
 from mmengine.runner import Runner
 from mmdet3d.utils import replace_ceph_backend
+
+import os
+import argparse
+import logging
+from mmengine.config import Config
+from mmengine.runner import Runner
+
+try:
+    import boto3
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "boto3"])
+    import boto3  # Retry import
+
+try:
+    import mlflow
+    import mlflow.sagemaker
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "mlflow"])
+    import mlflow
+    import mlflow.sagemaker
+
+# SageMaker MLflow tracking URI
+MLFLOW_TRACKING_URI = "arn:aws:sagemaker:eu-north-1:910181886844:mlflow-tracking-server/mmdet-tracking-mlflow"
+
+# Set MLflow tracking server
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+
+# Start an MLflow experiment
+mlflow.set_experiment("mmdet_training_experiment")
+
+# Auto-log all parameters and metrics
+mlflow.pytorch.autolog()
+
 
 
 def parse_args():
@@ -144,8 +176,22 @@ def main():
     # ✅ Initialize and start training
     runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
 
-    print("🚀 Starting training...")
-    runner.train()
+    with mlflow.start_run():
+        # Log hyperparameters
+        mlflow.log_param("work_dir", args.work_dir)
+        mlflow.log_param("sync_bn", args.sync_bn)
+        mlflow.log_param("amp", args.amp)
+        mlflow.log_param("resume", args.resume)
+        mlflow.log_param("config_file", args.config)
+
+        # Start training
+        print("🚀 Starting training...")
+        runner.train()
+
+        # Log final model artifact
+        mlflow.log_artifact(args.work_dir)  # Logs model checkpoints & logs directory
+
+        print("✅ Training complete. Model artifacts logged to MLflow!")
 
 
 if __name__ == "__main__":
