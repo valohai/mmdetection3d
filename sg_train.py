@@ -31,7 +31,7 @@ try:
     import mlflow
     import mlflow.sagemaker
 except ModuleNotFoundError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "'packaging<21.0'"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--force-reinstall", "packaging<21.0"])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "mlflow"])
     import mlflow
     import mlflow.sagemaker
