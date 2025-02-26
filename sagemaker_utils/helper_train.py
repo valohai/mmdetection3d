@@ -25,8 +25,8 @@ hyperparameters = {
 
 # ✅ SageMaker Estimator for Training
 estimator = PyTorch(
-    entry_point="tools/train.py",  # Directly run train.py
-    git_config=git_config,
+    entry_point="tools/sg_train.py",  # Directly run train.py
+    # git_config=git_config,
     source_dir="../",  # Make sure all scripts from the repo are available
     dependencies=["configs"],  # Ensure configs folder is included
     role=iam_role,
