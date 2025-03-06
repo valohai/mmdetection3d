@@ -4,7 +4,7 @@ MLFLOW_TRACKING_URI = "http://ec2-16-171-110-153.eu-north-1.compute.amazonaws.co
 
 
 # Define S3 paths
-s3_processed_data = "s3://dd-sample-bucket-north/mmdetection3d/datasets/kitti_processed/ImageSets/"
+s3_processed_data = "s3://dd-sample-bucket-north/mmdetection3d/datasets/kitti_processed/"
 s3_model_weights = "s3://dd-sample-bucket-north/mmdetection3d/model_weights/"
 s3_output_model = "s3://dd-sample-bucket-north/mmdetection3d/mmdetection3d-train-output/"
 
