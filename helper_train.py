@@ -1,6 +1,6 @@
 from sagemaker.pytorch import PyTorch
 
-MLFLOW_TRACKING_URI = "arn:aws:sagemaker:eu-north-1:910181886844:mlflow-tracking-server/mmdet-tracking-mlflow"
+MLFLOW_TRACKING_URI = "http://ec2-16-171-110-153.eu-north-1.compute.amazonaws.com:5000/"
 
 
 # Define S3 paths
@@ -9,7 +9,7 @@ s3_model_weights = "s3://dd-sample-bucket-north/mmdetection3d/model_weights/"
 s3_output_model = "s3://dd-sample-bucket-north/mmdetection3d/mmdetection3d-train-output/"
 
 # AWS IAM Role & Custom Docker Image
-image_uri = "910181886844.dkr.ecr.eu-north-1.amazonaws.com/mmdetection3d:with-sagemaker-training"
+image_uri = "910181886844.dkr.ecr.eu-north-1.amazonaws.com/mmdetection3d:with-sagemaker-training-mlflow"
 iam_role = "arn:aws:iam::910181886844:role/AmazonSageMaker-ExecutionRole"
 
 # ✅ Git configuration (auto-pulls latest scripts from your repo)
