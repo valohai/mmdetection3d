@@ -37,7 +37,7 @@ except ModuleNotFoundError:
     import mlflow.sagemaker
 
 # SageMaker MLflow tracking URI
-MLFLOW_TRACKING_URI = "arn:aws:sagemaker:eu-north-1:910181886844:mlflow-tracking-server/mmdet-tracking-mlflow"
+MLFLOW_TRACKING_URI = "http://ec2-16-171-110-153.eu-north-1.compute.amazonaws.com:5000/"
 
 # Set MLflow tracking server
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
