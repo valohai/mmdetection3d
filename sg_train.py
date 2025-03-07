@@ -27,6 +27,13 @@ except ModuleNotFoundError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "boto3"])
     import boto3  # Retry import
 
+# Install pytorch_lightning if not already installed
+try:
+    import pytorch_lightning
+except ModuleNotFoundError:
+    subprocess.check_call(["pip", "install", "pytorch_lightning"])
+    import pytorch_lightning  # Retry import
+
 try:
     import mlflow
     import mlflow.sagemaker
