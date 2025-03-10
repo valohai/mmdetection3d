@@ -61,7 +61,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train a 3D detector")
 
     # Standard arguments
-    parser.add_argument("config_file", help="Train config file path")
+    parser.add_argument("--config_file", help="Train config file path")
     parser.add_argument("--work_dir", help="The dir to save logs and models")
     parser.add_argument("--amp", action="store_true", help="Enable AMP training")
     parser.add_argument("--sync_bn", choices=["none", "torch", "mmcv"], default="none",
