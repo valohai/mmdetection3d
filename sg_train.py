@@ -61,8 +61,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train a 3D detector")
 
     # Standard arguments
-    parser.add_argument("config", help="Train config file path")
-    parser.add_argument("--work-dir", help="The dir to save logs and models")
+    parser.add_argument("config_file", help="Train config file path")
+    parser.add_argument("----work_dir", help="The dir to save logs and models")
     parser.add_argument("--amp", action="store_true", help="Enable AMP training")
     parser.add_argument("--sync_bn", choices=["none", "torch", "mmcv"], default="none",
                         help="Convert BatchNorm layers to SyncBatchNorm")
@@ -76,6 +76,8 @@ def parse_args():
     parser.add_argument("--launcher", choices=["none", "pytorch", "slurm", "mpi"],
                         default="none", help="Job launcher")
     parser.add_argument("--local_rank", type=int, default=0)
+    parser.add_argument("--mlflow_experiment_name", type=str, required=False, help="MLflow experiment name")
+    parser.add_argument("--mlflow_tracking_uri", type=str, required=False, help="MLflow tracking server URI")
 
     # SageMaker-specific parameters
     parser.add_argument("--s3-bucket", type=str, default="dd-sample-bucket-north",
