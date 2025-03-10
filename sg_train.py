@@ -109,7 +109,7 @@ def ensure_sagemaker_setup(args):
         args.work_dir = os.path.join(sm_output_dir, "data")
 
         # Ensure dataset paths are correct
-        args.config = args.config.replace("data/kitti/", sm_data_dir + "/")
+        args.config_file = args.config_file.replace("data/kitti/", sm_data_dir + "/")
 
         # Ensure necessary directories exist
         os.makedirs(args.work_dir, exist_ok=True)
