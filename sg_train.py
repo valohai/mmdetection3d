@@ -31,7 +31,7 @@ except ModuleNotFoundError:
 try:
     import pytorch_lightning
 except ModuleNotFoundError:
-    subprocess.check_call(["pip", "install", "pytorch_lightning"])
+    subprocess.check_call(["pip", "install", "pytorch_lightning==1.5.10"])
     import pytorch_lightning  # Retry import
 
 try:
@@ -39,7 +39,7 @@ try:
     import mlflow.sagemaker
 except ModuleNotFoundError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "--force-reinstall", "packaging<21.0"])
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "mlflow"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "mlflow==1.24.0"])
     import mlflow
     import mlflow.sagemaker
 
@@ -54,7 +54,6 @@ mlflow.set_experiment("mmdet_training_experiment")
 
 # Auto-log all parameters and metrics
 mlflow.pytorch.autolog()
-
 
 
 def parse_args():
