@@ -143,8 +143,13 @@ def main():
     # ✅ Download missing config files from S3 if running on SageMaker
     local_config_path = download_s3_config_files(args)
 
+    print('os.listdir code', os.listdir('/opt/ml/code/'))
+
+    print('os.listdir code/configs', os.listdir('/opt/ml/code/configs/'))
+
+    print('os.listdir code/configs/_base_', os.listdir('/opt/ml/code/configs/_base_/'))
     # ✅ Load training config
-    cfg = Config.fromfile(local_config_path)
+    cfg = Config.fromfile('/opt/ml/code/configs/_base_/schedules/cosine.py')
 
     if args.ceph:
         cfg = replace_ceph_backend(cfg)
