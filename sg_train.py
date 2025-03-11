@@ -82,7 +82,7 @@ def parse_args():
     # SageMaker-specific parameters
     parser.add_argument("--s3-bucket", type=str, default="dd-sample-bucket-north",
                         help="S3 bucket for model and configs")
-    parser.add_argument("--s3_config_dir", type=str, default="mmdetection3d/scripts/",
+    parser.add_argument("--s3_config_dir", type=str, default="mmdetection3d/scripts",
                         help="S3 directory where config files are stored")
 
     args = parser.parse_args()
