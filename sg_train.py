@@ -71,7 +71,7 @@ def parse_args():
     parser.add_argument("--resume", nargs="?", type=str, const="auto",
                         help="Resume training from a checkpoint")
     parser.add_argument("--ceph", action="store_true", help="Use Ceph as storage backend")
-    parser.add_argument("--cfg-options", nargs="+", action=DictAction,
+    parser.add_argument("--cfg_options", nargs="+", action=DictAction,
                         help="Override config settings")
     parser.add_argument("--launcher", choices=["none", "pytorch", "slurm", "mpi"],
                         default="none", help="Job launcher")
@@ -120,14 +120,14 @@ def ensure_sagemaker_setup(args):
 def download_s3_config_files(args):
     """Downloads missing config files from S3 if needed."""
     s3_client = boto3.client("s3")
-    local_config_path = f"/opt/ml/code/{args.config}"
+    local_config_path = f"/opt/ml/code/{args.config_file}"
 
     # Ensure directory exists
     os.makedirs(os.path.dirname(local_config_path), exist_ok=True)
 
     # Download config file if missing
     if not os.path.exists(local_config_path):
-        s3_config_path = f"{args.s3_config_dir}/{args.config}"
+        s3_config_path = f"{args.s3_config_dir}/{args.config_file}"
         print(f"Downloading config file from S3: s3://{args.s3_bucket}/{s3_config_path}")
         s3_client.download_file(args.s3_bucket, s3_config_path, local_config_path)
 
@@ -157,7 +157,7 @@ def main():
     if args.work_dir:
         cfg.work_dir = args.work_dir
     elif cfg.get("work_dir") is None:
-        cfg.work_dir = osp.join("./work_dirs", osp.splitext(osp.basename(args.config))[0])
+        cfg.work_dir = osp.join("./work_dirs", osp.splitext(osp.basename(args.config_file))[0])
 
     # ✅ Handle AMP training
     if args.amp:
