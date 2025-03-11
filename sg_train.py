@@ -149,7 +149,7 @@ def main():
 
     print('os.listdir code/configs/_base_', os.listdir('/opt/ml/code/configs/_base_/'))
     # ✅ Load training config
-    cfg = Config.fromfile('/opt/ml/code/configs/_base_/schedules/cosine.py')
+    cfg = Config.fromfile('/opt/ml/code/configs/mvxnet_fpn_dv_second_secfpn_8xb2-80e_kitti-3d-3class.py')
 
     if args.ceph:
         cfg = replace_ceph_backend(cfg)
@@ -192,8 +192,8 @@ def main():
         cfg.load_from = args.resume
 
     # ✅ Initialize and start training
-    # runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
-    runner = RUNNERS.build(cfg)
+    runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
+    # runner = RUNNERS.build(cfg)
 
     with mlflow.start_run():
         # Log hyperparameters
