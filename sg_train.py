@@ -192,7 +192,8 @@ def main():
         cfg.load_from = args.resume
 
     # ✅ Initialize and start training
-    runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
+    # runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
+    runner = RUNNERS.build(cfg)
 
     with mlflow.start_run():
         # Log hyperparameters
