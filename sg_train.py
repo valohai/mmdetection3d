@@ -201,7 +201,7 @@ def main():
         mlflow.log_param("sync_bn", args.sync_bn)
         mlflow.log_param("amp", args.amp)
         mlflow.log_param("resume", args.resume)
-        mlflow.log_param("config_file", args.config)
+        mlflow.log_param("config_file", args.config_file)
 
         # Start training
         print("🚀 Starting training...")
