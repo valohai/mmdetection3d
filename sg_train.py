@@ -15,6 +15,7 @@ import os
 import sys
 import argparse
 import logging
+import datetime
 from mmengine.config import Config
 from mmengine.runner import Runner
 
@@ -193,6 +194,36 @@ def main():
     elif args.resume:
         cfg.resume = True
         cfg.load_from = args.resume
+
+    # Define the new vis_backends with MLflow
+    mlflow_backend = dict(
+        type='MLflowVisBackend',
+        save_dir='temp_dir',
+        exp_name='Mosaic-roi',
+        run_name=f'mvxnet_fpn_dv_second_secfpn_8xb2-80e_kitti-3d-3class_{datetime.datetime.now()}',
+        tags=None,
+        params=None,
+        tracking_uri=MLFLOW_TRACKING_URI,
+        artifact_suffix=['.json', '.log', '.py', 'yaml']
+    )
+
+    # Ensure vis_backends exists and append MLflow if not already present
+    if not hasattr(cfg, 'vis_backends') or not isinstance(cfg.vis_backends, list):
+        cfg.vis_backends = []
+
+    # Append standard and MLflow backends
+    cfg.vis_backends = [
+        dict(type='LocalVisBackend'),
+        dict(type='TensorboardVisBackend'),
+        mlflow_backend
+    ]
+
+    # Update visualizer
+    cfg.visualizer = dict(
+        type='DetLocalVisualizer',
+        vis_backends=cfg.vis_backends,
+        name='visualizer'
+    )
 
     # ✅ Initialize and start training
     runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
