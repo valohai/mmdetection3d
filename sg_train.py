@@ -22,6 +22,9 @@ from mmengine.runner import Runner
 print('***************THE CODE')
 print(os.listdir('/opt/ml/code/'))
 
+import os
+os.system("pip install protobuf==3.8.0 --no-cache-dir")
+
 try:
     import boto3
 except ModuleNotFoundError:
@@ -214,7 +217,6 @@ def main():
     # Append standard and MLflow backends
     cfg.vis_backends = [
         dict(type='LocalVisBackend'),
-        dict(type='TensorboardVisBackend'),
         mlflow_backend
     ]
 
