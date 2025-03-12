@@ -46,6 +46,8 @@ except ModuleNotFoundError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "mlflow==1.24.0"])
     import mlflow
     import mlflow.sagemaker
+    if mlflow.active_run():
+        mlflow.end_run()
 
 # SageMaker MLflow tracking URI
 MLFLOW_TRACKING_URI = "http://ec2-16-171-110-153.eu-north-1.compute.amazonaws.com:5000/"
