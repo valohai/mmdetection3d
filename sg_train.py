@@ -199,7 +199,7 @@ def main():
     mlflow_backend = dict(
         type='MLflowVisBackend',
         save_dir='temp_dir',
-        exp_name='Mosaic-roi',
+        exp_name='mvxnet-roi',
         run_name=f'mvxnet_fpn_dv_second_secfpn_8xb2-80e_kitti-3d-3class_{datetime.datetime.now()}',
         tags=None,
         params=None,
@@ -220,7 +220,7 @@ def main():
 
     # Update visualizer
     cfg.visualizer = dict(
-        type='DetLocalVisualizer',
+        type='Det3DLocalVisualizer',
         vis_backends=cfg.vis_backends,
         name='visualizer'
     )
