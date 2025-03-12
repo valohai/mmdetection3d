@@ -107,9 +107,12 @@ def ensure_sagemaker_setup(args):
 
         # Adjust work directory
         args.work_dir = os.path.join(sm_output_dir, "data")
-
+        print("/opt/ml/input/", os.listdir('/opt/ml/input/'))
+        print("/opt/ml/input/data", os.listdir('/opt/ml/input/data'))
+        print("/opt/ml/input/data/kitti", os.listdir('/opt/ml/input/data/kitti'))
         # Ensure dataset paths are correct
         args.config_file = args.config_file.replace("data/kitti/", sm_data_dir + "/")
+
 
         # Ensure necessary directories exist
         os.makedirs(args.work_dir, exist_ok=True)

@@ -142,7 +142,7 @@ model = dict(
 
 # dataset settings
 dataset_type = 'KittiDataset'
-data_root = 'data/kitti/'
+data_root = '/opt/ml/input/data/kitti'
 class_names = ['Pedestrian', 'Cyclist', 'Car']
 metainfo = dict(classes=class_names)
 input_modality = dict(use_lidar=True, use_camera=True)
@@ -262,7 +262,7 @@ optim_wrapper = dict(
     clip_grad=dict(max_norm=35, norm_type=2),
 )
 val_evaluator = dict(
-    type='KittiMetric', ann_file='data/kitti/kitti_infos_val.pkl')
+    type='KittiMetric', ann_file='/opt/ml/input/data/kitti/kitti_infos_val.pkl')
 test_evaluator = val_evaluator
 
 vis_backends = [dict(type='LocalVisBackend')]
