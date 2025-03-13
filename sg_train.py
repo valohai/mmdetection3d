@@ -233,22 +233,22 @@ def main():
     runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
     # runner = RUNNERS.build(cfg)
 
-    with mlflow.start_run(nested=True):
-        # Log hyperparameters
-        mlflow.log_param("work_dir", args.work_dir)
-        mlflow.log_param("sync_bn", args.sync_bn)
-        mlflow.log_param("amp", args.amp)
-        mlflow.log_param("resume", args.resume)
-        mlflow.log_param("config_file", args.config_file)
-
-        # Start training
-        print("🚀 Starting training...")
-        runner.train()
+    # with mlflow.start_run(nested=True):
+    #     # Log hyperparameters
+    #     mlflow.log_param("work_dir", args.work_dir)
+    #     mlflow.log_param("sync_bn", args.sync_bn)
+    #     mlflow.log_param("amp", args.amp)
+    #     mlflow.log_param("resume", args.resume)
+    #     mlflow.log_param("config_file", args.config_file)
+    #
+    #     # Start training
+    #     print("🚀 Starting training...")
+    runner.train()
 
         # Log final model artifact
-        mlflow.log_artifact(args.work_dir)  # Logs model checkpoints & logs directory
-
-        print("✅ Training complete. Model artifacts logged to MLflow!")
+        # mlflow.log_artifact(args.work_dir)  # Logs model checkpoints & logs directory
+        #
+        # print("✅ Training complete. Model artifacts logged to MLflow!")
 
 
 if __name__ == "__main__":
