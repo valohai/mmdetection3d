@@ -48,7 +48,6 @@ except ModuleNotFoundError:
     import mlflow.sagemaker
     if mlflow.active_run():
         mlflow.end_run()
-    mlflow.start_run(nested=True)
 
 # SageMaker MLflow tracking URI
 MLFLOW_TRACKING_URI = "http://ec2-16-171-110-153.eu-north-1.compute.amazonaws.com:5000/"
@@ -234,7 +233,7 @@ def main():
     runner = Runner.from_cfg(cfg) if "runner_type" not in cfg else RUNNERS.build(cfg)
     # runner = RUNNERS.build(cfg)
 
-    with mlflow.start_run():
+    with mlflow.start_run(nested=True):
         # Log hyperparameters
         mlflow.log_param("work_dir", args.work_dir)
         mlflow.log_param("sync_bn", args.sync_bn)
