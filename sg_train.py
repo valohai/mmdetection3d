@@ -48,6 +48,7 @@ except ModuleNotFoundError:
     import mlflow.sagemaker
     if mlflow.active_run():
         mlflow.end_run()
+    mlflow.start_run(nested=True)
 
 # SageMaker MLflow tracking URI
 MLFLOW_TRACKING_URI = "http://ec2-16-171-110-153.eu-north-1.compute.amazonaws.com:5000/"
